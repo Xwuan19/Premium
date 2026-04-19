@@ -1,0 +1,12 @@
+#!name=RedMode_Premium
+#!desc=Unlock RedMode Pro (Based on Locket Method)
+
+[Script]
+# Sửa dữ liệu gói cước
+redmode_sub = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v1\/(subscribers\/[^/]+$|receipts$), script-path=redmode_sub.js, requires-body=true, timeout=120
+
+# Xóa Header để tránh lỗi server
+redmode_header = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/v1\/(subscribers\/[^/]+$|receipts$), script-path=redmode_header.js, timeout=120
+
+[MITM]
+hostname = %APPEND% api.revenuecat.com
