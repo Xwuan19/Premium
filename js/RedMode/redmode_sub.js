@@ -1,6 +1,12 @@
+/**
+ * @name RedMode Pro Unlock
+ * @author Xwuan
+ * @description Unlock Premium features for RedMode
+ */
+
 var obj = JSON.parse($response.body);
 
-obj.Attention = "RedMode Premium đã kích hoạt! Chúc bạn dùng vui vẻ.";
+obj.Attention = "RedMode Premium đã được kích hoạt bởi Xwuan! Chúc bạn dùng vui vẻ.";
 
 var redmode_data = {
   "is_sandbox": false,
