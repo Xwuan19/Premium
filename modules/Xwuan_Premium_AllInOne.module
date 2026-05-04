@@ -1,0 +1,42 @@
+#!name=🚀 Xwuan Premium All-In-One
+#!desc=🌟 [v1.0] Unlock Premium System by Xwuan (ie.1w3n). Includes: 🎵 Spotify, 📸 Locket, 🔴 RedMode, 🎨 Picsart, 🎞️ VSCO, 🎞️ OldRoll, ✨ Wink...
+#!author=👤 Xwuan
+
+[General]
+bypass-system = true[cite: 4, 7, 10]
+skip-proxy = *.local, *.crashlytics.com[cite: 4, 7, 10]
+tun-excluded-routes = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12[cite: 4, 7, 10]
+user-agent = Locket/1.0.0 (iPhone; iOS 26; Scale/3.00)[cite: 5]
+
+[Script]
+# --- 💎 REVENUECAT SERVICES (Locket, RedMode, Picsart, VSCO) ---
+# 📸 Locket Gold
+rc_locket = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/locketXn.js, requires-body=true, max-size=-1, timeout=120[cite: 5]
+
+# 🔴 RedMode Pro
+rc_redmode = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v1\/(subscribers\/[^/]+$|receipts$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/RedMode/redmode_sub.js, requires-body=true, max-size=-1, timeout=120[cite: 8]
+
+# 🛡️ RevenueCat Header Fix (Shared)
+rc_header_fix = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/deleteHeader.js, timeout=120[cite: 5, 8]
+
+# --- 🎵 MUSIC SERVICES ---
+# 🟢 Spotify Premium
+spotify_header = type=http-request, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-qx-header.js, timeout=10[cite: 9]
+spotify_proto = type=http-response, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-proto.js, requires-body=1, binary-body-mode=1, timeout=10[cite: 9]
+spotify_json = type=http-request, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-json.js, timeout=10[cite: 9]
+
+# --- 🎬 EDITING & CAMERA ---
+# ✨ Wink VIP
+wink_vip = type=http-response, pattern=^https?:\/\/api-sub\.meitu\.com\/v2\/user\/vip_info_by_group\.json, requires-body=1, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Wink/Wink.js[cite: 4]
+
+# 🎞️ OldRoll Lifetime
+oldroll_vip = type=http-response, pattern=^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$, requires-body=1, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/OldRoll/LifetimeVIP.js[cite: 6]
+
+# 🎨 Picsart Gold
+picsart_gw = type=http-request, pattern=https://api.picsart.com/gw-v2/shop/subscription/apple/purchases, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Picsart/PicsArt.js, requires-body=true, timeout=5[cite: 7]
+
+# 🎞️ VSCO Full Tool
+vsco_fix = type=http-request, pattern=^https://api.revenuecat.com/.+/(receipts$|subscribers/?(.*?)*$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/VSCO/VSCO.js, requires-body=true, timeout=5[cite: 10]
+
+[MITM]
+hostname = %APPEND% api.revenuecat.com, buy.itunes.apple.com, api-sub.meitu.com, spclient.wg.spotify.com, *spclient.spotify.com, api.picsart.com, raw.githubusercontent.com[cite: 4, 5, 6, 7, 8, 9, 10]
