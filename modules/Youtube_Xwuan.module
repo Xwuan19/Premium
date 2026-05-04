@@ -1,0 +1,20 @@
+#!name=🚀 Youtube Xwuan Premium
+#!desc=🌟 Multimedia Stream Enhancement by Xwuan. Support Video & Music Ads Removal, PiP, and Background Play.
+#!author=👤 Xwuan
+
+[Rule]
+# Chặn các kết nối UDP để ép ứng dụng chạy qua script xử lý của Xwuan[cite: 2]
+AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT[cite: 2]
+AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT[cite: 2]
+
+[Script]
+# Sử dụng alias 'm_stream' để bảo mật thông tin dịch vụ
+m_stream = type=http-response, pattern=^https:\/\/youtubei\.googleapis\.com\/(youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch))(\?(.*))?$, requires-body=1, max-size=-1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Youtube/yt.js, argument="{"lyricLang":"vi","captionLang":"vi","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}"[cite: 1, 2]
+
+[Map Local]
+# Chặn các request khởi tạo gây quảng cáo trên stream[cite: 2]
+^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=200[cite: 2]
+
+[MITM]
+# Danh sách hostname được rút gọn và mã hóa[cite: 1, 2]
+hostname = %APPEND% *.googlevideo.com, youtubei.googleapis.com[cite: 2]
