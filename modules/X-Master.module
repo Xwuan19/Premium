@@ -1,14 +1,11 @@
 #!name=🚀 X-Master Premium
-#!desc=👑 [v1.4] Ultimate Unlock by Xwuan. Fix OldRoll (Strict Mode).
+#!desc=👑 [v1.5] Ultimate Unlock by Xwuan. Fix OldRoll (Strict Legacy Mode).
 #!author=👤 Xwuan
 
-[General]
-# Giữ User-Agent ổn định cho Locket và RedMode
-user-agent = Locket/1.0.0 (iPhone; iOS 26; Scale/3.00)[cite: 2, 5]
-
 [Script]
-# --- 🎞️ OLDROLL ---
-OldRoll = type=http-response, pattern=^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$, requires-body=1, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/OldRoll/LifetimeVIP.js[cite: 3]
+# --- 🎞️ OLDROLL (PHẢI LÀM Y HỆT FILE LẺ) ---
+# Không dùng dấu cách sau dấu bằng, giữ nguyên tên biến OldRoll
+OldRoll=type=http-response,pattern=^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$,requires-body=1,script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/OldRoll/LifetimeVIP.js[cite: 3]
 
 # --- 📸 LOCKET & REDMODE ---
 rc_locket = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/locketXn.js, requires-body=true, max-size=-1, timeout=120[cite: 2]
@@ -16,11 +13,11 @@ rc_redmode = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v1\/(s
 rc_header_fix = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/deleteHeader.js, timeout=120[cite: 2, 5]
 
 # --- 🎵 SPOTIFY PREMIUM ---
-# Tối giản để tránh xung đột với các app camera
 spotify_proto = type=http-response, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-proto.js, requires-body=1, binary-body-mode=1, timeout=10[cite: 6]
 
 # --- 🎨 PICSART GOLD ---
 picsart_gw = type=http-request, pattern=https://api.picsart.com/gw-v2/shop/subscription/apple/purchases, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Picsart/PicsArt.js, requires-body=true, timeout=5[cite: 4]
 
 [MITM]
-hostname = buy.itunes.apple.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api.picsart.com, raw.githubusercontent.com[cite: 3, 4, 5, 6]
+# Chép nguyên si dòng hostname từ file lẻ của bạn vào vị trí đầu tiên
+hostname = %APPEND% buy.itunes.apple.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api.picsart.com, raw.githubusercontent.com[cite: 3, 4, 5, 6]
