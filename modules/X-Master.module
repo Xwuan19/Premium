@@ -1,5 +1,5 @@
 #!name=🚀 X-Master Premium
-#!desc=👑 Ultimate Unlock by Xwuan. Fix OldRoll & RevenueCat.
+#!desc=👑 [v1.3] Ultimate Unlock by Xwuan. Special Fixed for OldRoll.
 #!author=👤 Xwuan
 
 [General]
@@ -8,21 +8,21 @@ user-agent = Locket/1.0.0 (iPhone; iOS 26; Scale/3.00)[cite: 2, 5]
 
 [Script]
 # --- 🎞️ OLDROLL ---
-# Đưa lên đầu danh sách để Shadowrocket xử lý trước các script khác
-oldroll_vip = type=http-response, pattern=^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$, requires-body=1, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/OldRoll/LifetimeVIP.js[cite: 3]
+OldRoll = type=http-response, pattern=^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$, requires-body=1, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/OldRoll/LifetimeVIP.js[cite: 3, 6]
 
 # --- 📸 LOCKET & REDMODE ---
-rc_locket = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/locketXn.js, requires-body=true, max-size=-1, timeout=120[cite: 2]
-rc_redmode = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v1\/(subscribers\/[^/]+$|receipts$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/RedMode/redmode_sub.js, requires-body=true, max-size=-1, timeout=120[cite: 5]
+rc_locket = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts$|subscribers\/[^/]+$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/locketXn.js, requires-body=true, max-size=-1, timeout=120[cite: 2, 5]
+rc_redmode = type=http-response, pattern=^https:\/\/api\.revenuecat\.com\/v1\/(subscribers\/[^/]+$|receipts$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/RedMode/redmode_sub.js, requires-body=true, max-size=-1, timeout=120
 rc_header_fix = type=http-request, pattern=^https:\/\/api\.revenuecat\.com\/.*\/(receipts|subscribers), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/deleteHeader.js, timeout=120[cite: 2, 5]
 
 # --- 🎵 SPOTIFY PREMIUM ---
-spotify_header = type=http-request, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-qx-header.js, timeout=10[cite: 6]
-spotify_proto = type=http-response, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-proto.js, requires-body=1, binary-body-mode=1, timeout=10[cite: 6]
-spotify_json = type=http-request, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-json.js, timeout=10[cite: 6]
+spotify_header = type=http-request, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/user-customization-service\/v1\/customize$, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-qx-header.js, timeout=10
+spotify_proto = type=http-response, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-proto.js, requires-body=1, binary-body-mode=1, timeout=10
+spotify_json = type=http-request, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-json.js, timeout=10
 
 # --- 🎨 PICSART GOLD ---
 picsart_gw = type=http-request, pattern=https://api.picsart.com/gw-v2/shop/subscription/apple/purchases, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Picsart/PicsArt.js, requires-body=true, timeout=5[cite: 4]
 
 [MITM]
-hostname = buy.itunes.apple.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api.picsart.com, raw.githubusercontent.com[cite: 2, 3, 4, 5, 6]
+# Đặt buy.itunes.apple.com lên đầu tiên và tách biệt rõ ràng
+hostname = buy.itunes.apple.com, api.revenuecat.com, spclient.wg.spotify.com, *spclient.spotify.com, api.picsart.com, raw.githubusercontent.com[cite: 1, 2, 3, 4, 6]
