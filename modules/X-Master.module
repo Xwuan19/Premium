@@ -1,36 +1,34 @@
 #!name=🚀 X-Master Premium
-#!desc=👑 [v3.5] Ultimate System Core by Xwuan. All-In-One: Multimedia (YT/Music/Spotify), Graphic & Social Services.
+#!desc=👑 [v3.7] Ultimate Core by Xwuan. Fix Search & Music Playback.
 #!author=👤 Xwuan
 
 [General]
 user-agent = Locket/1.0.0 (iPhone; iOS 26; Scale/3.00)
 
 [Rule]
-# Chặn UDP để ép luồng Multimedia chạy qua script tối ưu của Xwuan[cite: 4]
-AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT[cite: 4]
-AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT[cite: 4]
+# Bắt buộc chặn UDP để script của bạn có thể can thiệp giải mã HTTPS
+AND,((DOMAIN-SUFFIX,googlevideo.com), (PROTOCOL,UDP)),REJECT
+AND,((DOMAIN,youtubei.googleapis.com), (PROTOCOL,UDP)),REJECT
 
 [Script]
 # --- 🛡️ INTERNAL CORE (Locket, RedMode, Picsart...) ---
-# Ẩn danh các dịch vụ xác thực để tránh bị soi code
 v1_core = type=http-response, pattern=^https:\/\/api\.v1\.cloud\/.*\/(auth$|verify\/[^/]+$), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/locketXn.js, requires-body=true, max-size=-1, timeout=120[cite: 3]
 v1_header = type=http-request, pattern=^https:\/\/api\.v1\.cloud\/.*\/(auth|verify), script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Locket/deleteHeader.js, timeout=120[cite: 3]
 
-# --- 🎵 MULTIMEDIA (Spotify, YouTube, YT Music) ---
-# Spotify Optimization[cite: 3]
+# --- 🎵 MULTIMEDIA (Spotify) ---
 m_proto = type=http-response, pattern=^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Spotify/spotify-proto.js, requires-body=1, binary-body-mode=1, timeout=10[cite: 3]
 
-# YouTube & YouTube Music (Sử dụng cấu trúc hoạt động tốt nhất của Xwuan)
-# Thay thế script-path sang link JS bạn vừa làm thành công
-m_stream = type=http-response, pattern=^https:\/\/youtubei\.googleapis\.com\/(youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch))(\?(.*))?$, requires-body=1, max-size=-1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Youtube/yt.js, argument="{"lyricLang":"vi","captionLang":"vi","blockUpload":true,"blockImmersive":true,"blockShorts":false,"debug":false}"[cite: 1, 4]
+# --- 🎞️ YOUTUBE & MUSIC (Dùng cấu trúc từ file lẻ đã chạy được) ---
+# Tách biệt m_stream để đảm bảo không bị lỗi Search/Playback[cite: 1, 4]
+m_stream = type=http-response, pattern=^https:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch), requires-body=1, max-size=-1, binary-body-mode=1, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Youtube/yt.js, argument="lyricLang=vi,captionLang=vi,blockUpload=true,blockImmersive=true,blockShorts=false,debug=false"[cite: 1, 4]
 
 # --- 🎨 GRAPHIC (Picsart) ---
 g_auth = type=http-request, pattern=https://api.picsart.com/gw-v2/shop/subscription/apple/purchases, script-path=https://raw.githubusercontent.com/Xwuan19/Premium/refs/heads/main/js/Picsart/PicsArt.js, requires-body=true, timeout=5[cite: 3]
 
 [Map Local]
-# Chặn đứng request quảng cáo mồi trên luồng video/music[cite: 4]
+# Khử quảng cáo mồi để Music có thể phát nhạc mượt mà
 ^https?:\/\/[\w-]+\.googlevideo\.com\/initplayback.+&oad data-type=text data="" status-code=200[cite: 4]
 
 [MITM]
-# Gộp toàn bộ hostname và đưa domain quan trọng lên đầu[cite: 3, 4]
-hostname = %APPEND% youtubei.googleapis.com, *.googlevideo.com, api.*.com, *.spotify.com, spclient.wg.spotify.com, api.picsart.com, raw.githubusercontent.com[cite: 3, 4]
+# Chú ý: Thứ tự hostname cực kỳ quan trọng để tránh lỗi Music[cite: 1, 4]
+hostname = %APPEND% youtubei.googleapis.com, *.googlevideo.com, api.*.com, *.spotify.com, spclient.wg.spotify.com, api.picsart.com, raw.githubusercontent.com[cite: 1, 4]
