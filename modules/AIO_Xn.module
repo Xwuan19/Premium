@@ -1,5 +1,5 @@
 #!name = AIO_Xn
-#!desc = YouTube + Spotify + SoundCloud + Locket (RevenueCat) + Sub-Store + Alight Motion + PicsArt + Wink + Truecaller + KineMaster + CamScanner + BeautyPlus
+#!desc = crack by ie.1w3n
 
 [Rule]
 AND,((DOMAIN-SUFFIX,googlevideo.com),(PROTOCOL,UDP)),REJECT
